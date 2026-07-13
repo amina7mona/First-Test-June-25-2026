@@ -8,10 +8,6 @@ import org.wpilib.opmode.Teleop;
 @Teleop(name = "A301 Single Motor Test")
 public class A301SingleMotorTestTeleMode extends PeriodicOpMode {
 
-  private static final int MOTIONCORE_CAN_D0_BUS_ID = 5;
-
-  private static final int DEFAULT_A301_CAN_ID = 3;
-
   private final DefaultUserControls userControls;
   private A301 motor;
 
@@ -21,22 +17,19 @@ public class A301SingleMotorTestTeleMode extends PeriodicOpMode {
   }
 
   @Override
-  public void start() {
-    System.out.println("running");
+public void start() {
+    System.out.println("START");
 
     try {
-      motor = new A301(MOTIONCORE_CAN_D0_BUS_ID, DEFAULT_A301_CAN_ID);
-
-      System.out.println("Firmware: " + motor.getFirmwareString());
-
-      motor.setThrottle(0.0);
-
+        motor = new A301(5, 3);
+        System.out.println("CREATED");
+        System.out.println("FW: " + motor.getFirmwareString());
+        motor.setThrottle(0.0);
     } catch (Throwable t) {
-      System.out.println("failed");
-      t.printStackTrace();
-      motor = null;
+        System.out.println("FAILED");
+        t.printStackTrace();
     }
-  }
+}
 
 // @Override
 // public void periodic() {
