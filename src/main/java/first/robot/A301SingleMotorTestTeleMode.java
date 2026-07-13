@@ -38,14 +38,27 @@ public class A301SingleMotorTestTeleMode extends PeriodicOpMode {
     }
   }
 
-  @Override
-  public void periodic() {
-    System.out.println("moving motor");
+@Override
+public void periodic() {
+    var gamepad = userControls.getGamepad(0);
 
-    if (motor != null) {
-      motor.setThrottle(0.20);
+    if (motor == null) {
+        return;
     }
-  }
+
+    // Triangle = Forward
+    if (gamepad.getNorthFaceButton()) {
+        motor.setThrottle(0.20);
+    }
+    // Cross = Reverse
+    else if (gamepad.getSouthFaceButton()) {
+        motor.setThrottle(-0.20);
+    }
+    // No button = Stop
+    else {
+        motor.setThrottle(0.0);
+    }
+}
 
   @Override
   public void end() {
