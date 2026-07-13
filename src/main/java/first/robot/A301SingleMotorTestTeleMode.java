@@ -38,6 +38,28 @@ public class A301SingleMotorTestTeleMode extends PeriodicOpMode {
     }
   }
 
+// @Override
+// public void periodic() {
+//     var gamepad = userControls.getGamepad(0);
+
+//     if (motor == null) {
+//         return;
+//     }
+
+//     // Triangle = Forward
+//     if (gamepad.getNorthFaceButton()) {
+//         motor.setThrottle(0.20);
+//     }
+//     // Cross = Reverse
+//     else if (gamepad.getSouthFaceButton()) {
+//         motor.setThrottle(-0.20);
+//     }
+//     // No button = Stop
+//     else {
+//         motor.setThrottle(0.0);
+//     }
+// }
+
 @Override
 public void periodic() {
     var gamepad = userControls.getGamepad(0);
@@ -46,17 +68,22 @@ public void periodic() {
         return;
     }
 
-    // Triangle = Forward
-    if (gamepad.getNorthFaceButton()) {
-        motor.setThrottle(0.20);
-    }
-    // Cross = Reverse
-    else if (gamepad.getSouthFaceButton()) {
-        motor.setThrottle(-0.20);
-    }
-    // No button = Stop
-    else {
-        motor.setThrottle(0.0);
+    // Button overrides
+    if (gamepad.getNorthFaceButton()) {          // Triangle
+        motor.setThrottle(0.5);
+    } else if (gamepad.getSouthFaceButton()) {   // Cross
+        motor.setThrottle(-0.5);
+    } else {
+        // Right joystick Y-axis
+        double throttle = -gamepad.getRightY();
+
+        // Small deadband so tiny joystick movements don't move the motor
+        if (Math.abs(throttle) < 0.05) {
+            throttle = 0.0;
+        }
+
+        // Joystick controls motor proportionally
+        motor.setThrottle(throttle);
     }
 }
 
