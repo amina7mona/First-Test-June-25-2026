@@ -21,7 +21,7 @@ public class A301PIDTest extends PeriodicOpMode {
   private static final int DEFAULT_A301_CAN_ID = 3;
 
   // PID constants (safe starting values)
-  private static final double kP = 0.35;
+  private static final double kP = 0.6;
   private static final double kI = 0.0;
   private static final double kD = 0.0;
 
